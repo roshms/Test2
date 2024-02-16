@@ -1,0 +1,11 @@
+{
+	"name": "MDB",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://labsars.dfs.core.windows.net/"
+		}
+	}
+}

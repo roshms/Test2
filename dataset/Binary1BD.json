@@ -1,0 +1,19 @@
+{
+	"name": "Binary1BD",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Test_File_Error.xlsx",
+				"container": "test"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

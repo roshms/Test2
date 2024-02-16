@@ -1,0 +1,81 @@
+{
+	"name": "LS_DBR_JobCluster",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "AzureDatabricks",
+		"parameters": {
+			"LS_workspace_URI": {
+				"type": "string"
+			},
+			"LS_GCP_client_email": {
+				"type": "string"
+			},
+			"LS_GCP_project_id": {
+				"type": "string"
+			},
+			"LS_GCP_private_key": {
+				"type": "string"
+			},
+			"LS_GCP_private_key_id": {
+				"type": "string"
+			},
+			"LS_App_secret": {
+				"type": "string"
+			},
+			"LS_cluster_pool": {
+				"type": "string"
+			},
+			"LS_cluster_policy": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"typeProperties": {
+			"domain": "@linkedService().LS_workspace_URI",
+			"accessToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_AKV",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": {
+					"value": "@linkedService().LS_App_secret",
+					"type": "Expression"
+				}
+			},
+			"instancePoolId": "@linkedService().LS_cluster_pool",
+			"newClusterNodeType": "Standard_DS3_v2",
+			"newClusterNumOfWorker": "2:4",
+			"newClusterSparkConf": {
+				"spark.databricks.delta.preview.enabled": "true",
+				"spark.hadoop.fs.gs.project.id": {
+					"value": "@linkedService().LS_GCP_project_id",
+					"type": "Expression"
+				},
+				"spark.hadoop.fs.gs.auth.service.account.private.key": {
+					"value": "@linkedService().LS_GCP_private_key",
+					"type": "Expression"
+				},
+				"spark.hadoop.google.cloud.auth.service.account.enable": "true",
+				"spark.databricks.delta.autoCompact.enabled": "true",
+				"spark.hadoop.fs.gs.auth.service.account.email": {
+					"value": "@linkedService().LS_GCP_client_email",
+					"type": "Expression"
+				},
+				"spark.hadoop.fs.gs.auth.service.account.private.key.id": {
+					"value": "@linkedService().LS_GCP_private_key_id",
+					"type": "Expression"
+				},
+				"spark.databricks.delta.optimizeWrite.enabled": "true",
+				"spark.master": "local[*]"
+			},
+			"newClusterSparkEnvVars": {
+				"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+			},
+			"newClusterVersion": "10.4.x-scala2.12",
+			"newClusterInitScripts": [],
+			"clusterOption": "Autoscaling",
+			"policyId": "@linkedService().LS_cluster_policy"
+		}
+	}
+}
